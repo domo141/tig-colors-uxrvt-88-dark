@@ -16,7 +16,7 @@ Here we replace just the `blue` color from default colors with
 something else (e.g `color39`, `#113`) for 88-color terminal
 window.
 
-Aftter the "installation" of the above replacement there are
+After the "installation" of the above replacement there are
 instructions and tools that can be used to easily to visualize
 any other color from the 88-color palette...
 
@@ -27,20 +27,22 @@ any other color from the 88-color palette...
 
 As executed in modern /bin/sh compatible shell.
 
-    $ test ! -d ~/.config/tig || mv ~/.config/tig ~/.config/tig.bak
+<pre>
+$ test ! -d ~/.config/tig || mv -v ~/.config/tig ~/.config/tig.bak
 
-    $ mkdir -p ~/.config/tig
+$ mkdir -pv ~/.config/tig
 
-    $ sed -n '/^color/ s/blue/color39/p' /etc/tigrc | tee ~/.config/tig/colors
+$ sed -n '/^color/ s/blue/color39/p' /etc/tigrc | tee ~/.config/tig/colors
 
-    $ echo '
-    # recreate tig-colors from (updated) /etc/tigrc for urxvt-88 dark bg with:
-    # sed -n '/^color/ s/blue/color39/p' /etc/tigrc | tee ~/.config/tig/colors
+$ echo '
+# recreate tig-colors from (updated) /etc/tigrc for urxvt-88 dark bg with:
+# sed -n '/^color/ s/blue/color39/p' /etc/tigrc | tee ~/.config/tig/colors
 
-    source ~/.config/tig/colors
-    ' > ~/.config/tig/config
+source ~/.config/tig/colors
+' > ~/.config/tig/config
 
-    $ cat ~/.config/tig/config
+$ cat ~/.config/tig/config
+</pre>
 
 Now, if you had content in `~/.config/tig.bak` or `~/.tigrc` merge those to
 `~/.config/tig/config` (if the latter exists (and is supported in your
@@ -48,7 +50,7 @@ Now, if you had content in `~/.config/tig.bak` or `~/.tigrc` merge those to
 
 ### Alternative (destructive) oneliner ###
 
-    sed -n '/^color/ s/blue/color39/p' /etc/tigrc | tee ~/.tigrc
+    $ sed -n '/^color/ s/blue/color39/p' /etc/tigrc | tee ~/.tigrc
 
 - overwrites old content if any
 - may not be read if `~/.config/tig/config` exists
