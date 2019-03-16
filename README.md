@@ -16,6 +16,11 @@ Here we replace just the `blue` color from default colors with
 something else (e.g `color39`, `#113`) for 88-color terminal
 window.
 
+(note: on 256-color urxvt `color39` is `#035`, which also looks
+workable. there `color105` (`#225`) is probably closest to `39`
+on 88-color terminal -- if anyone cared. for more details look
+*color tech* at the end of this document.)
+
 After the "installation" of the above replacement there are
 instructions and tools that can be used to easily to visualize
 any other color from the 88-color palette...
@@ -26,6 +31,8 @@ any other color from the 88-color palette...
 (with pretty high probability that it works)
 
 As executed in modern /bin/sh compatible shell.
+
+<!--- hint:  less -X README.md  -->
 
 <pre>
 $ test ! -d ~/.config/tig || mv -v ~/.config/tig ~/.config/tig.bak
@@ -62,7 +69,8 @@ See [palette88.png](palette88.png) for sample of the default 88 colors
 available on urxvt (and apparently xterm).
 
 You can run [`./print88palette.sh`](print88palette.sh) on your terminal to
-see how the above sample looks in your environment
+see how the above sample looks in your environment (that tool has been
+updated to print 256-color palette when $TERM contains '256' in its value).
 
 The tool [`./testigcolor.sh`](./testigcolor.sh) can be used to do quick
 tests how `tig` behaves with any color you choose for `blue` replacement.
@@ -89,3 +97,31 @@ for replacement above was calculated as:
 
 For `tig(1)` that can be given as `color39` -- or just `39`. In this
 context using `color39` is clearer.
+
+### Experiments on 256-color terminal ###
+
+I'm using 88-color urxvt terminal emulator since it has been good enough
+for me; `urxvt` terminfo is more common than `urxvr-26color` and so on.
+
+Anyway, since in `tig(1)` configuration one can (afaik) *only* configure
+non-basic colors using color index -- and that index gives different color
+when terminal color capabilities differ.
+
+On 256-color `uxrvt` first 16 colors are like in 88-color `urxvt`. Next
+216 (17-231) forms 6x6x6 color cube. Rest 24 (232-255) evenly shaped grey.
+
+The color index from color cube is calculated using the following formula:
+
+        r * 36 + g * 6 + b + 16
+
+With that, `color39` gives `#035` (3 * 6 + 5 + 16), and `#225` `color105`
+(2 * 36 + 2 * 6 + 5 + 16) -- just as related example to demonstrate how
+these calculations work.
+
+[`./print88palette.sh`](print88palette.sh) on 256-color terminal can
+print 256-color palette (if $TERM contains '256' in is value -- if not,
+prefix `TERM=256` to your `print88palette.sh` command line).
+
+Last (and least), wasted some time to create this picture:
+[blue-and-replacements.png](blue-and-replacements.png) to show how color39
+looks on 88 and 256 color terminals.
